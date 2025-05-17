@@ -1,6 +1,18 @@
 # ManejoExcepcionesJava
 
-Este proyecto es una aplicación de consola en Java que demuestra el manejo de excepciones personalizadas para validar un formulario de registro de usuario.
+Aplicación de consola en Java que demuestra el uso de excepciones personalizadas para validar un formulario de registro de usuario. El objetivo es mostrar cómo manejar errores de entrada de manera clara y estructurada, mejorando la experiencia del usuario y la robustez del código.
+
+## Índice
+
+- [Descripción](#descripción)
+- [Estructura del proyecto](#estructura-del-proyecto)
+- [Validaciones implementadas](#validaciones-implementadas)
+- [Ejecución](#ejecución)
+- [Ejemplo de uso](#ejemplo-de-uso)
+
+## Descripción
+
+Este proyecto solicita al usuario datos básicos para registrarse (nombre, edad, correo electrónico y contraseña) y valida cada campo usando excepciones personalizadas. Si algún dato es incorrecto, se muestra un mensaje específico y se solicita nuevamente la entrada.
 
 ## Estructura del proyecto
 
