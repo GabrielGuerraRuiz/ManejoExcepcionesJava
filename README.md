@@ -9,6 +9,7 @@ Aplicación de consola en Java que demuestra el uso de excepciones personalizada
 - [Validaciones implementadas](#validaciones-implementadas)
 - [Ejecución](#ejecución)
 - [Ejemplo de uso](#ejemplo-de-uso)
+- [Desarrollo](#desarrollo)
 
 ## Descripción
 
@@ -26,6 +27,65 @@ Este proyecto solicita al usuario datos básicos para registrarse (nombre, edad,
 - **Edad:** Debe ser un número entre 0 y 120.
 - **Correo electrónico:** Debe tener un formato válido.
 - **Contraseña:** Debe tener al menos 8 caracteres, una mayúscula y un número.
+
+## Desarrollo
+
+El desarrollo de este proyecto se centra en el uso de excepciones personalizadas para validar la entrada de datos del usuario en un formulario de registro. Cada validación se realiza en métodos separados y, en caso de error, se lanza una excepción específica que es capturada en el flujo principal para mostrar un mensaje claro al usuario.
+
+### Flujo de validación
+
+1. El usuario ingresa sus datos uno por uno.
+2. Cada dato es validado mediante un método específico.
+3. Si la validación falla, se lanza una excepción personalizada y se solicita nuevamente el dato.
+4. Si todos los datos son válidos, el registro es exitoso.
+
+El menú principal y la lógica de validación están en el archivo `Main.java`. El flujo es sencillo: se solicita cada dato, se valida y, si hay error, se muestra el mensaje correspondiente y se vuelve a pedir el dato.
+
+```java
+System.out.println("=== FORMULARIO DE REGISTRO ===");
+
+System.out.print("Ingrese nombre de usuario: ");
+String usuario = scanner.nextLine();
+
+int edad = 0;
+while (true) {
+    System.out.print("Ingrese edad: ");
+    try {
+        edad = Integer.parseInt(scanner.nextLine());
+        validarEdad(edad);
+        break;
+    } catch (EdadException e) {
+        System.out.println("Error: " + e.getMessage());
+    } catch (NumberFormatException e) {
+        System.out.println("La edad debe ser un número válido.");
+    }
+}
+```
+
+Este patrón se repite para el correo electrónico y la contraseña, usando sus propias excepciones personalizadas. Así, el usuario siempre recibe retroalimentación clara y puede corregir su entrada.
+
+### Métodos de validación
+
+Cada campo tiene su propio método de validación. Por ejemplo, la contraseña:
+
+```java
+private static void validarContrasena(String contrasena) throws ContrasenaException {
+    if (contrasena.length() < 8) {
+        throw new ContrasenaException("Debe tener al menos 8 caracteres");
+    }
+    boolean tieneMayuscula = false;
+    boolean tieneNumero = false;
+    for (char c : contrasena.toCharArray()) {
+        if (Character.isUpperCase(c)) tieneMayuscula = true;
+        if (Character.isDigit(c)) tieneNumero = true;
+    }
+    if (!tieneMayuscula || !tieneNumero) {
+        throw new ContrasenaException("Debe contener al menos una mayúscula y un número");
+    }
+}
+```
+
+Esto permite centralizar la lógica de validación y reutilizarla fácilmente, además de mantener el código principal limpio y fácil de entender.
 
 ## Ejecución
 
@@ -58,7 +118,4 @@ Ingrese una contraseña: Abcdefg1
 ![Imagen de WhatsApp 2025-05-16 a las 22 54 17_2182ebc1](https://github.com/user-attachments/assets/a5daf241-8fbc-49ec-bc96-822c1fa1e67f)
 ![Imagen de WhatsApp 2025-05-16 a las 22 56 18_f2d84905](https://github.com/user-attachments/assets/cea318b0-d263-437c-98dc-d1f4a1df72b1)
 ![Imagen de WhatsApp 2025-05-16 a las 22 56 18_edbee117](https://github.com/user-attachments/assets/a5eb8093-d3b4-407a-8660-e6f41d68c9c8)
-
-
-
 
