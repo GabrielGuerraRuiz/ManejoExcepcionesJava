@@ -13,24 +13,46 @@ public class Main {
             System.out.print("Ingrese nombre de usuario: ");
             String usuario = scanner.nextLine();
 
-            System.out.print("Ingrese edad: ");
-            int edad = Integer.parseInt(scanner.nextLine());
-            validarEdad(edad);
+            int edad = 0;
+            while (true) {
+                System.out.print("Ingrese edad: ");
+                try {
+                    edad = Integer.parseInt(scanner.nextLine());
+                    validarEdad(edad);
+                    break;
+                } catch (EdadException e) {
+                    System.out.println("Error: " + e.getMessage());
+                } catch (NumberFormatException e) {
+                    System.out.println("La edad debe ser un número válido.");
+                }
+            }
 
-            System.out.print("Ingrese su correo electrónico: ");
-            String email = scanner.nextLine();
-            validarEmail(email);
+            String email = "";
+            while (true) {
+                System.out.print("Ingrese su correo electrónico: ");
+                email = scanner.nextLine();
+                try {
+                    validarEmail(email);
+                    break;
+                } catch (EmailException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+            }
 
-            System.out.print("Ingrese una contraseña: ");
-            String contrasena = scanner.nextLine();
-            validarContrasena(contrasena);
+            String contrasena = "";
+            while (true) {
+                System.out.print("Ingrese una contraseña: ");
+                contrasena = scanner.nextLine();
+                try {
+                    validarContrasena(contrasena);
+                    break;
+                } catch (ContrasenaException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+            }
 
             System.out.println("¡Registro exitoso!");
 
-        } catch (ContrasenaException | EdadException | EmailException e) {
-            System.out.println("Error: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            System.out.println("La edad debe ser un número válido.");
         } finally {
             scanner.close();
         }
@@ -61,7 +83,6 @@ public class Main {
     }
 
     private static void validarEmail(String email) throws EmailException {
-        // Expresión regular simple para validar email
         String regex = "^[\\w-\\.]+@[\\w-]+\\.[a-z]{2,6}$";
         Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(email);
@@ -69,23 +90,5 @@ public class Main {
         if (!matcher.matches()) {
             throw new EmailException("Correo electrónico no válido.");
         }
-    }
-}
-// Excepciones personalizadas
-
-class ContrasenaException extends Exception {
-    public ContrasenaException(String mensaje) {
-        super(mensaje);
-    }
-}
-
-class EdadException extends Exception {
-    public EdadException(String mensaje) {
-        super(mensaje);
-    }
-}
-class EmailException extends Exception {
-    public EmailException(String mensaje) {
-        super(mensaje);
     }
 }
